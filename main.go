@@ -7,13 +7,18 @@ import (
 	"io"
 	"log"
 	"os"
+
+	"github.com/calmh/hexii"
 )
+
+var h2 bool
 
 func main() {
 	log.SetFlags(0)
 
 	skip := flag.Int64("skip", 0, "Skip bytes at start")
 	lim := flag.Int64("lim", 0, "Limit read bytes")
+	flag.BoolVar(&h2, "h2", false, "Use HexII output")
 	flag.Usage = usage
 	flag.Parse()
 
@@ -55,7 +60,12 @@ func main() {
 }
 
 func dumpReader(r io.Reader) {
-	d := hex.Dumper(os.Stdout)
+	var d io.WriteCloser
+	if h2 {
+		d = hexii.Dumper(os.Stdout, 16, 4, true)
+	} else {
+		d = hex.Dumper(os.Stdout)
+	}
 
 	_, err := io.Copy(d, r)
 	if err != nil {
