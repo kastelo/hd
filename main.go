@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/calmh/hexii"
+	"github.com/kastelo/hexii"
 )
 
 var h2 bool
