@@ -10,13 +10,8 @@ pipeline {
       steps {
         parallel(
           "Build": {
-            sh 'echo Hello'
-            archiveArtifacts(artifacts: '*.tar.gz', onlyIfSuccessful: true)
-            
-          },
-          "Test": {
-            sh 'go test'
-            
+            sh 'go get'
+            archiveArtifacts(artifacts: '$GOPATH/bin/hd', onlyIfSuccessful: true)
           }
         )
       }
