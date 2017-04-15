@@ -1,9 +1,24 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'golang'
+    }
+    
+  }
   stages {
     stage('Build') {
       steps {
-        sh 'echo Hello'
+        parallel(
+          "Build": {
+            sh 'echo Hello'
+            archiveArtifacts(artifacts: '*.tar.gz', onlyIfSuccessful: true)
+            
+          },
+          "Test": {
+            sh 'go test'
+            
+          }
+        )
       }
     }
   }
