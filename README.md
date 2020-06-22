@@ -12,6 +12,7 @@ Usage:
 Options:
   -lim=0: Limit read bytes
   -skip=0: Skip bytes at start
+  -h2: Use HexII output
 
 $ hd -skip 8 -lim 64 main.go
 00000000  6d 61 69 6e 0a 0a 69 6d  70 6f 72 74 20 28 0a 09  |main..import (..|
