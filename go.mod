@@ -1,5 +1,5 @@
-module github.com/kastelo/hd
+module kastelo.dev/hd
 
-go 1.14
+go 1.19
 
-require github.com/kastelo/hexii v1.0.0
+require kastelo.dev/hexii v1.1.0
