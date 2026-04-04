@@ -8,10 +8,14 @@ import (
 	"log"
 	"os"
 
+	"github.com/mattn/go-isatty"
 	"kastelo.dev/hexii"
 )
 
-var h2 bool
+var (
+	h2     bool
+	colour bool
+)
 
 func main() {
 	log.SetFlags(0)
@@ -19,6 +23,7 @@ func main() {
 	skip := flag.Int64("skip", 0, "Skip bytes at start")
 	lim := flag.Int64("lim", 0, "Limit read bytes")
 	flag.BoolVar(&h2, "h2", false, "Use HexII output")
+	flag.BoolVar(&colour, "h2-colour", isatty.IsTerminal(os.Stdout.Fd()), "Use coloured h2 output")
 	flag.Usage = usage
 	flag.Parse()
 
@@ -62,7 +67,7 @@ func main() {
 func dumpReader(r io.Reader) {
 	var d io.WriteCloser
 	if h2 {
-		d = hexii.Dumper(os.Stdout, 16, 4, true)
+		d = hexii.Dumper(os.Stdout, 16, 4, true, colour)
 	} else {
 		d = hex.Dumper(os.Stdout)
 	}
