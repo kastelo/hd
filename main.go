@@ -37,7 +37,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		defer f.Close()
+		defer f.Close() //nolint:errcheck
 		r = f
 	} else {
 		usage()
@@ -47,7 +47,7 @@ func main() {
 	// If a skip was set, seek ahead that many bytes
 	if *skip != 0 {
 		rs := r.(io.ReadSeeker) // both files and stdin are seekable
-		n, err := rs.Seek(*skip, os.SEEK_SET)
+		n, err := rs.Seek(*skip, io.SeekStart)
 		if err != nil {
 			log.Fatal(err)
 		}
